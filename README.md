@@ -70,3 +70,70 @@ public:
 };
 
 
+
+
+day 2
+leetcode 169
+class Solution {
+public:
+    int majorityElement(vector<int>& nums) {
+        int n = nums.size();
+        for(int i = 0; i<n; i++){
+            int count =0;
+            for(int j= 0; j<n; j++){
+                if(nums[i] == nums[j]){
+                    count++;
+                }
+            }
+            if(count > n/2){
+                return nums[i];
+            }
+        }
+        return -1;
+    }
+};
+
+//optimized
+class Solution {
+public:
+    int majorityElement(vector<int>& nums) {
+        sort(nums.begin(), nums.end());
+        int n = nums.size();
+        return nums[n/2];
+        }
+};
+
+// optimize
+class Solution {
+public:
+    int majorityElement(vector<int>& nums) {
+int candidate = -1;
+int vote = 0;
+for(int i=0; i< nums.size(); i++){
+    if(vote ==0){
+        candidate = nums[i];
+        vote = 1;
+    }else{
+        if(candidate == nums[i]){
+            vote++;
+        }else{
+            vote--;
+        }
+    }
+}
+int count = 0;
+for(int i =0;i<nums.size();i++){
+    if(nums[i]== candidate){
+        count++;
+    }
+}
+if(count > nums.size()/2){
+    return candidate;
+}
+return -1;
+}
+};
+
+
+
+
