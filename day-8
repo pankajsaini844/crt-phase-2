@@ -1,0 +1,44 @@
+leetcode 739
+  
+  class Solution {
+public:
+    vector<int> dailyTemperatures(vector<int>& temperatures) {
+        int n= temperatures.size();
+        vector<int> ans(n,0);
+        stack<int> st;
+
+        for(int i = n-1; i>= 0; i--){
+            while(!st.empty() && temperatures[i] >= temperatures[st.top()]){
+                st.pop();
+            }
+            if(!st.empty()){
+                ans[i] = st.top() - i;
+
+            }
+            st.push(i);
+        }
+        return ans;
+    }
+};
+
+leetcode 1047
+class Solution {
+public:
+    string removeDuplicates(string s) {
+        stack<char> st;
+        for(char c: s){
+            if(!st.empty() && st.top() == c){
+                st.pop();
+            } else {
+                st.push(c);
+            }
+        }
+        string result = "";
+        while(!st.empty()){
+            result = result + st.top();
+            st.pop();
+        }
+        reverse(result.begin(), result.end());
+        return result;
+    }
+};
