@@ -1,0 +1,108 @@
+DFS of a Graph 
+https://www.geeksforgeeks.org/problems/depth-first-traversal-for-a-graph/1
+class Solution {
+  public:
+    
+    void dfsHelper(vector<vector<int>>&adj, 
+                    vector<bool>& visited,
+                    vector<int> &ans,
+                    int node){
+    visited[node] = true;
+    ans.push_back(node);
+    
+    for(int adjacentNode : adj[node]){
+        if(!visited[adjacentNode]){
+            dfsHelper(adj, visited, ans, adjacentNode);
+        }
+    }
+}
+    
+    vector<int> dfs(vector<vector<int>>& adj) {
+        // Code here
+        int n = adj.size();
+        vector<bool> visited(n, false);
+        vector<int> ans;
+        
+        dfsHelper(adj, visited, ans, 0);
+        return ans;
+    }
+};
+
+BFS of a Graph 
+https://www.geeksforgeeks.org/problems/bfs-traversal-of-graph/1
+class Solution {
+  public:
+    vector<int> bfs(vector<vector<int>> &adj) {
+        // code here
+        int n = adj.size();
+        vector<int> ans;
+        vector<bool> visited(n, false);
+        queue<int> q;
+        
+        q.push(0);
+        visited[0] = true;
+        
+        while(!q.empty()){
+            int node = q.front();
+            q.pop();
+            
+            ans.push_back(node);
+            for(int adjacentNode : adj[node]){
+                if(!visited[adjacentNode]){
+                    visited[adjacentNode] = true;
+                    q.push(adjacentNode);
+                }
+            }
+        }
+        return ans;
+        
+    }
+};
+
+LeetCode 200 
+Number of islands 
+// rows -- total number of rows
+// cols -- total number of cols
+// row -- current row
+// col -- current col
+class Solution {
+private:
+    void dfs(vector<vector<char>>& grid, int row, int col) {
+        grid[row][col] ='*';
+        // up 
+        if(row > 0 && grid[row - 1][col] == '1'){
+            dfs(grid, row - 1, col);
+        }
+        // down 
+        if(row + 1 < rows && grid[row + 1][col] == '1'){
+            dfs(grid, row + 1, col);
+        }
+        // left
+        if(col > 0 && grid[row][col - 1] == '1'){
+            dfs(grid, row, col - 1);
+        }
+        // right 
+        if(col + 1 < cols && grid[row][col + 1] == '1'){
+            dfs(grid, row, col + 1);
+        }
+    };
+
+public:
+    int rows ;
+    int cols ;
+    int numIslands(vector<vector<char>>& grid) {
+        rows = grid.size();
+        cols = grid[0].size();
+        int islands = 0;
+        
+        for(int row = 0; row < rows; row++) {
+            for(int col = 0; col < cols; col++) {
+                if(grid[row][col] == '1'){
+                    dfs(grid, row, col);
+                    islands++;
+                }
+            }
+        }
+        return islands;
+    }
+};
